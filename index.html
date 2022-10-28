@@ -8,47 +8,79 @@
 
   <script>
     // start with strings, numbers and booleans
+// let age = 100;
+// let age2 = age;
+// console.log(age, age2);
+// age = 200;
+// // why do we get 200, 100? because we are not changing the value of age, we are changing the value of age2.
+// console.log(age, age2);
+
+// let name = 'James';
+// let name2 = name;
+// console.log(name, name2);
+// name = 'Potato'
+// console.log(name, name2);
 
     // Let's say we have an array
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
     // and we want to make a copy of it.
-
+const team = players;
+console.log(players, team);
     // You might think we can just do something like this:
-
-    // however what happens when we update that array?
-
-    // now here is the problem!
-
-    // oh no - we have edited the original array too!
-
-    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+    // becasue we updated team but team is not the array, team is just a reference to the original array which is players. When you edit original array or update any of the arrays it will always go back to the original array.
+// team[2] = 'Potato';
 
     // So, how do we fix this? We take a copy instead!
-
-    // one way
-
-    // or create a new array and concat the old one in
-
-    // or use the new ES6 Spread
-
-    // now when we update it, the original one isn't changed
+    //.slice() will make a copy of the array but only when it's not passed any arguments. If you pass it an argument it will make a copy of the array starting at the index you pass it.
+const team2 = players.slice();
+   //Or we take a blank array and concatenate it with the original array. 
+const team3 = [].concat(players);
+      // Or we use the new ES6 Spread, ... (three dots) and it will take all the values of the array and put them into a new array.
+const team4 = [...players];
+team4[4] = 'Potato';
+console.log(team4);
+// throwing an extra index into the array, 2 index places after the end creates a blank space in the array.
+team4[6] = 'Potato';
+      // Or we can use Array.from() which will take an array like object and turn it into an array. Array.from() effectively does the same thing as the spread operator, it makes a copy of it.
+const team5 =Array.from(players);
 
     // The same thing goes for objects, let's say we have a person object
 
-    // with Objects
     const person = {
-      name: 'Wes Bos',
-      age: 80
+      name: 'Jimany Cricket',
+      age: 72
     };
 
-    // and think we make a copy:
+    // the following does not make a copy of the object, it just makes a reference to the original object and gives us jimany cricket, age 72, number 99.
+    // const coronel = person;
+    // coronel.number = 99;
+    // how do we take a copy instead? Using Object.assign() which will take an empty object and then add the properties of the original object to it. In this way we can change the age of the person object without altering the original object.
+const coronel2 = Object.assign({}, person, {number: 99, age: 12});
+    // the following is the same as the above but using the spread operator.
+const coronel3 = {...person};
 
-    // how do we take a copy instead?
+    const james = {
+      name: 'James',
+      age: 32,
+      social: {
+        twitter: '@jamespotato',
+        facebook: 'james.potato'
+      }
+    }
 
-    // We will hopefully soon see the object ...spread
+console.clear();
+console.log(james);
+
+// why do we pass in a blank object? because we want to make a copy of the object and not just a reference to it. If we didn't pass in a blank object we would be changing the original object.
+//Object.assign() only goes one level deep, so if we have a nested object it will only copy the first level of the object.
+const dev = Object.assign({}, james);
+
+dev.name = 'Potato';
 
     // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+    // The following is the poorman's deep clone. It will take the object and parse it into a string and then turn it back into an object. This is not the best way to do it but it works.
+const dev2 = JSON.parse(JSON.stringify(james));
 
   </script>
 
